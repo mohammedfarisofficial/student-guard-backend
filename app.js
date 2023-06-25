@@ -7,7 +7,12 @@ import helmet from "helmet";
 import morgan from "morgan";
 //firebase
 import admin from "firebase-admin";
-import serviceAccount from './student-tracker-715e8-firebase-adminsdk-2dxlx-57c43861db.json' assert { type: "json" };
+import fs from 'fs'
+const serviceAccount = JSON.parse(fs.readFileSync('./student-tracker-715e8-firebase-adminsdk-2dxlx-57c43861db.json'));
+
+
+
+
 
 //routes
 import authRoutes from "./routes/auth.js";
