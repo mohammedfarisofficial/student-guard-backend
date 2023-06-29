@@ -10,10 +10,6 @@ import admin from "firebase-admin";
 import fs from 'fs'
 const serviceAccount = JSON.parse(fs.readFileSync('./student-tracker-715e8-firebase-adminsdk-2dxlx-57c43861db.json'));
 
-
-
-
-
 //routes
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
@@ -32,6 +28,7 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
+
 dotenv.config();
 app.use(express.json());
 app.use(helmet());
@@ -42,7 +39,8 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
 app.get("/", async (req, res) => {
-  res.send("students tracker backend");
+  //get req testing
+  res.send("students guard backend");
 });
 
 io.on("connection", (socket) => {
@@ -56,7 +54,6 @@ io.on("connection", (socket) => {
   socket.on("user-location", async (data) => {
     console.log("recieved from client changing lat and lng");
     const { userId, coords, status } = data;
-    // console.log(status)
     await User.findByIdAndUpdate(
       { _id: userId },
       {
@@ -115,6 +112,8 @@ statusChange.on("error", (error) => {
   console.log("Error:", error);
 });
 
+
+//routes
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/status", statusRoutes);
